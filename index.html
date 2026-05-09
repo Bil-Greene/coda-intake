@@ -198,6 +198,8 @@
   .dot { width: 6px; height: 6px; border-radius: 50%; background: #e0e0e0; }
   .dot.done { background: #0a0a0a; }
   .dot.current { width: 8px; height: 8px; background: #0a0a0a; }
+  #thankyou { display: none; }
+  #thankyou.active { display: block; }
 </style>
 </head>
 <body>
@@ -223,6 +225,10 @@
     <p class="autosave-note">Answers save automatically — you can close and return any time.</p>
 
     <div id="sections-wrap"></div>
+  </div>
+
+  <div id="thankyou" role="status">
+    <p>Thank you — your responses have been submitted.</p>
   </div>
 </div>
 
@@ -403,16 +409,49 @@ function render() {
     block.className = 'section-block active';
     block.innerHTML = buildReview() + `<div class="nav-row">
       <button class="btn" id="btn-back2">← Back</button>
-      <button class="btn btn-primary" id="btn-copy">Copy all answers</button>
+      <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
     </div>`;
     wrap.appendChild(block);
 
     document.getElementById('btn-back2').addEventListener('click', () => { current--; render(); });
-    document.getElementById('btn-copy').addEventListener('click', () => {
-      navigator.clipboard.writeText(buildCopyText()).then(() => {
-        document.getElementById('btn-copy').textContent = 'Copied ✓';
-        setTimeout(() => { document.getElementById('btn-copy').textContent = 'Copy all answers'; }, 2000);
+    document.getElementById('btn-submit').addEventListener('click', async () => {
+      saveCurrent();
+      const btn = document.getElementById('btn-submit');
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+      const payloadAnswers = {};
+      sections.forEach(sec => {
+        sec.questions.forEach(q => {
+          payloadAnswers[q.id] = answers[q.id] != null ? answers[q.id] : '';
+        });
       });
+      try {
+        const res = await fetch('https://formspree.io/f/mykobkjw', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ answers: payloadAnswers })
+        });
+        let data = {};
+        try {
+          data = await res.json();
+        } catch (_) {}
+        if (data.ok || data.next) {
+          try { localStorage.removeItem('coda-intake'); } catch (e) {}
+          document.querySelector('.form-wrap').hidden = true;
+          document.getElementById('thankyou').classList.add('active');
+        } else {
+          alert('Something went wrong. Please try again.');
+          btn.disabled = false;
+          btn.textContent = 'Submit';
+        }
+      } catch (err) {
+        alert('Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Submit';
+      }
     });
   }
 }

@@ -1,0 +1,250 @@
+
+<style>
+  :root {
+    --form-border: 0.5px solid var(--color-border-tertiary);
+    --section-gap: 2.5rem;
+  }
+  * { box-sizing: border-box; }
+  .form-wrap { padding: 0.5rem 0 2rem; font-size: 15px; }
+  .progress-bar-wrap { margin-bottom: 2rem; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; }
+  .progress-track { height: 3px; background: var(--color-border-tertiary); border-radius: 2px; }
+  .progress-fill { height: 3px; background: var(--color-text-primary); border-radius: 2px; transition: width 0.3s ease; }
+  .section-block { display: none; }
+  .section-block.active { display: block; }
+  .section-tag { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); margin-bottom: 6px; }
+  .section-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 1.5rem; }
+  .q-block { margin-bottom: 1.5rem; }
+  .q-label { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; display: block; }
+  .q-hint { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 8px; display: block; }
+  textarea { width: 100%; min-height: 80px; resize: vertical; font-size: 14px; padding: 10px 12px; border: var(--form-border); border-radius: 8px; background: var(--color-background-primary); color: var(--color-text-primary); font-family: inherit; line-height: 1.5; }
+  textarea:focus { outline: none; border-color: var(--color-border-secondary); }
+  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; padding-top: 1.25rem; border-top: var(--form-border); }
+  .btn { padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); font-family: inherit; }
+  .btn:hover { background: var(--color-background-secondary); }
+  .btn-primary { background: var(--color-text-primary); color: var(--color-background-primary); border-color: var(--color-text-primary); }
+  .btn-primary:hover { opacity: 0.88; background: var(--color-text-primary); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .review-section { margin-bottom: 1.5rem; }
+  .review-section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-secondary); margin-bottom: 0.75rem; padding-bottom: 6px; border-bottom: var(--form-border); }
+  .review-q { margin-bottom: 1rem; }
+  .review-q-label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 2px; }
+  .review-q-answer { font-size: 14px; color: var(--color-text-primary); white-space: pre-wrap; }
+  .review-q-empty { font-size: 13px; color: var(--color-text-secondary); font-style: italic; }
+  .done-block { text-align: center; padding: 2rem 0; }
+  .done-block p { color: var(--color-text-secondary); font-size: 14px; margin-top: 0.5rem; }
+  .copy-btn { margin-top: 1rem; }
+  .step-dots { display: flex; gap: 6px; align-items: center; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-border-secondary); }
+  .dot.done { background: var(--color-text-primary); }
+  .dot.current { width: 8px; height: 8px; background: var(--color-text-primary); }
+</style>
+
+<div class="form-wrap" role="main">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Coda Homes brand and positioning intake form</h2>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span id="section-name">Identity & Positioning</span>
+      <span id="section-count">1 of 8</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:12.5%"></div></div>
+    <div class="step-dots" id="step-dots" style="margin-top:8px;"></div>
+  </div>
+
+  <div id="sections-wrap"></div>
+</div>
+
+<script>
+const sections = [
+  {
+    tag: "Identity & Positioning",
+    title: "Who is Coda?",
+    questions: [
+      { id: "q1", label: "In one sentence: what does Coda do, and for whom?", hint: "" },
+      { id: "q2", label: "What is Coda not?", hint: "What would you refuse to be mistaken for?" },
+      { id: "q3", label: "If Coda had a peer — a firm you respect and want to grow into — who is it and why?", hint: "" },
+      { id: "q4", label: "What does 'builder' mean at Coda?", hint: "" }
+    ]
+  },
+  {
+    tag: "Differentiation",
+    title: "What sets Coda apart?",
+    questions: [
+      { id: "q5", label: "What do you do that most builders in Victoria don't, won't, or can't?", hint: "" },
+      { id: "q6", label: "What does a Coda project look like at closeout that a competitor's doesn't?", hint: "" },
+      { id: "q7", label: "Who calls Coda, and why?", hint: "Landowners? Developers? Architects? Direct clients?" }
+    ]
+  },
+  {
+    tag: "Audience",
+    title: "Who is the site for?",
+    questions: [
+      { id: "q8", label: "Who is the primary audience for the Coda site?", hint: "What decision are they trying to make when they land on it?" },
+      { id: "q9", label: "Is there a secondary audience?", hint: "E.g. trades, consultants, municipal contacts" },
+      { id: "q10", label: "What does a good client relationship look like for Coda?", hint: "What does a bad one look like?" }
+    ]
+  },
+  {
+    tag: "Scope & Services",
+    title: "What does Coda offer?",
+    questions: [
+      { id: "q11", label: "What are the core service categories Coda offers?", hint: "General contracting, design-build, construction management, etc." },
+      { id: "q12", label: "What project types does Coda pursue? What does Coda decline?", hint: "" },
+      { id: "q13", label: "Is there a project size range that defines the core mandate?", hint: "Dollar value, unit count, or square footage" }
+    ]
+  },
+  {
+    tag: "Proof & Credibility",
+    title: "What can Coda point to?",
+    questions: [
+      { id: "q14", label: "What completed projects can be shown or referenced publicly?", hint: "" },
+      { id: "q15", label: "What credentials, licences, or affiliations matter?", hint: "BC Housing, CHBA, licenced GC number, etc." },
+      { id: "q16", label: "What do past clients say that captures what working with Coda is actually like?", hint: "" }
+    ]
+  },
+  {
+    tag: "Relationship to Thane",
+    title: "How does Coda relate to Thane?",
+    questions: [
+      { id: "q17", label: "How do you want the Coda/Thane relationship described publicly, if at all?", hint: "" },
+      { id: "q18", label: "Are there projects where Coda and Thane are both involved? How should the site handle that?", hint: "Or should it be agnostic?" },
+      { id: "q19", label: "Should the Coda site link to or acknowledge Thane?", hint: "" }
+    ]
+  },
+  {
+    tag: "Tone & Brand Feel",
+    title: "How should Coda feel?",
+    questions: [
+      { id: "q20", label: "Three words that should describe the Coda brand presence.", hint: "" },
+      { id: "q21", label: "Three words that should never describe it.", hint: "" },
+      { id: "q22", label: "Visual direction preference?", hint: "Warmer and more craft-forward than Thane, or matched in restraint?" }
+    ]
+  },
+  {
+    tag: "Practical",
+    title: "Logistics",
+    questions: [
+      { id: "q23", label: "What is the primary CTA for the Coda site?", hint: "Inquire, get a quote, view work, call us?" },
+      { id: "q24", label: "Is there a domain? Hosting preference? Timeline pressure?", hint: "" },
+      { id: "q25", label: "Anything else that should inform this before we start?", hint: "" }
+    ]
+  }
+];
+
+const answers = {};
+let current = 0;
+const total = sections.length;
+const wrap = document.getElementById('sections-wrap');
+const progressFill = document.getElementById('progress-fill');
+const sectionName = document.getElementById('section-name');
+const sectionCount = document.getElementById('section-count');
+const dotsWrap = document.getElementById('step-dots');
+
+function buildDots() {
+  dotsWrap.innerHTML = '';
+  sections.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i < current ? ' done' : i === current ? ' current' : '');
+    dotsWrap.appendChild(d);
+  });
+}
+
+function saveCurrent() {
+  const block = document.querySelector('.section-block.active');
+  if (!block) return;
+  block.querySelectorAll('textarea').forEach(ta => {
+    answers[ta.dataset.id] = ta.value;
+  });
+}
+
+function buildReview() {
+  let html = '<div class="review-section-title" style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:1rem;text-transform:none;letter-spacing:0;">Review your answers before copying</div>';
+  sections.forEach(sec => {
+    html += `<div class="review-section"><div class="review-section-title">${sec.tag}</div>`;
+    sec.questions.forEach(q => {
+      const ans = answers[q.id] || '';
+      html += `<div class="review-q"><div class="review-q-label">${q.label}</div>`;
+      html += ans.trim() ? `<div class="review-q-answer">${ans.replace(/</g,'&lt;')}</div>` : `<div class="review-q-empty">No answer provided</div>`;
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
+function buildCopyText() {
+  let out = 'CODA HOMES — BRAND & POSITIONING INTAKE\n';
+  out += '=========================================\n\n';
+  sections.forEach(sec => {
+    out += `${sec.tag.toUpperCase()}\n${'-'.repeat(sec.tag.length)}\n`;
+    sec.questions.forEach(q => {
+      const ans = answers[q.id] || '(no answer)';
+      out += `\n${q.label}\n${ans}\n`;
+    });
+    out += '\n';
+  });
+  return out;
+}
+
+function render() {
+  wrap.innerHTML = '';
+  buildDots();
+  const pct = ((current + 1) / (total + 2)) * 100;
+  progressFill.style.width = pct + '%';
+
+  if (current < total) {
+    sectionName.textContent = sections[current].tag;
+    sectionCount.textContent = `${current + 1} of ${total}`;
+
+    const sec = sections[current];
+    const block = document.createElement('div');
+    block.className = 'section-block active';
+    let html = `<div class="section-tag">${sec.tag}</div><div class="section-title">${sec.title}</div>`;
+    sec.questions.forEach(q => {
+      const saved = answers[q.id] || '';
+      html += `<div class="q-block"><label class="q-label" for="${q.id}">${q.label}</label>`;
+      if (q.hint) html += `<span class="q-hint">${q.hint}</span>`;
+      html += `<textarea id="${q.id}" data-id="${q.id}" placeholder="Point form is fine...">${saved}</textarea></div>`;
+    });
+    html += `<div class="nav-row">
+      <button class="btn" id="btn-back" ${current === 0 ? 'disabled' : ''}>← Back</button>
+      <button class="btn btn-primary" id="btn-next">${current === total - 1 ? 'Review answers →' : 'Next →'}</button>
+    </div>`;
+    block.innerHTML = html;
+    wrap.appendChild(block);
+
+    document.getElementById('btn-next').addEventListener('click', () => {
+      saveCurrent(); current++; render();
+    });
+    if (current > 0) {
+      document.getElementById('btn-back').addEventListener('click', () => {
+        saveCurrent(); current--; render();
+      });
+    }
+
+  } else if (current === total) {
+    sectionName.textContent = 'Review';
+    sectionCount.textContent = `${total + 1} of ${total + 1}`;
+    progressFill.style.width = '93%';
+
+    const block = document.createElement('div');
+    block.className = 'section-block active';
+    block.innerHTML = buildReview() + `<div class="nav-row">
+      <button class="btn" id="btn-back2">← Back</button>
+      <button class="btn btn-primary" id="btn-copy">Copy all answers</button>
+    </div>`;
+    wrap.appendChild(block);
+
+    document.getElementById('btn-back2').addEventListener('click', () => { current--; render(); });
+    document.getElementById('btn-copy').addEventListener('click', () => {
+      navigator.clipboard.writeText(buildCopyText()).then(() => {
+        document.getElementById('btn-copy').textContent = 'Copied ✓';
+        setTimeout(() => { document.getElementById('btn-copy').textContent = 'Copy all answers'; }, 2000);
+      });
+    });
+  }
+}
+
+render();
+</script>

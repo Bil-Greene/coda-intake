@@ -419,10 +419,10 @@ function render() {
       const btn = document.getElementById('btn-submit');
       btn.disabled = true;
       btn.textContent = 'Submitting…';
-      const payloadAnswers = {};
-      sections.forEach(sec => {
-        sec.questions.forEach(q => {
-          payloadAnswers[q.id] = answers[q.id] != null ? answers[q.id] : '';
+      var payload = {};
+      sections.forEach(function(sec) {
+        sec.questions.forEach(function(q) {
+          payload[q.label] = answers[q.id] || '';
         });
       });
       try {
@@ -432,7 +432,7 @@ function render() {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify({ answers: payloadAnswers })
+          body: JSON.stringify(payload)
         });
         let data = {};
         try {

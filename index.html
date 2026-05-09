@@ -1,58 +1,229 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coda Homes — Brand & Positioning Intake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --form-border: 0.5px solid var(--color-border-tertiary);
-    --section-gap: 2.5rem;
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 15px;
+    background: #ffffff;
+    color: #3a3a3a;
   }
-  * { box-sizing: border-box; }
-  .form-wrap { padding: 0.5rem 0 2rem; font-size: 15px; }
-  .progress-bar-wrap { margin-bottom: 2rem; }
-  .progress-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; }
-  .progress-track { height: 3px; background: var(--color-border-tertiary); border-radius: 2px; }
-  .progress-fill { height: 3px; background: var(--color-text-primary); border-radius: 2px; transition: width 0.3s ease; }
+  .main-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px 28px 96px;
+  }
+  .site-header {
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+    margin: 0 -28px;
+    padding: 0 28px;
+    border-bottom: 1px solid #d9d9d9;
+    box-sizing: border-box;
+  }
+  .wordmark {
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: #0a0a0a;
+  }
+  .header-rule {
+    flex-shrink: 0;
+    width: 1px;
+    height: 14px;
+    margin: 0 16px;
+    background: #d9d9d9;
+  }
+  .header-subtitle {
+    font-size: 13px;
+    color: #5c5c5c;
+  }
+  .progress-bar-wrap {
+    margin-top: 48px;
+    margin-bottom: 0;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #5c5c5c;
+    margin-bottom: 6px;
+  }
+  .progress-label span:last-child {
+    text-align: right;
+  }
+  .progress-track {
+    height: 2px;
+    background: #e0e0e0;
+    border-radius: 0;
+  }
+  .progress-fill {
+    height: 2px;
+    background: #0a0a0a;
+    border-radius: 0;
+    transition: width 0.3s ease;
+  }
+  .autosave-note {
+    margin: 0 0 32px;
+    font-size: 12px;
+    color: #9a9a9a;
+  }
+  .form-wrap { font-size: 15px; }
   .section-block { display: none; }
   .section-block.active { display: block; }
-  .section-tag { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); margin-bottom: 6px; }
-  .section-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 1.5rem; }
-  .q-block { margin-bottom: 1.5rem; }
-  .q-label { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; display: block; }
-  .q-hint { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 8px; display: block; }
-  textarea { width: 100%; min-height: 80px; resize: vertical; font-size: 14px; padding: 10px 12px; border: var(--form-border); border-radius: 8px; background: var(--color-background-primary); color: var(--color-text-primary); font-family: inherit; line-height: 1.5; }
-  textarea:focus { outline: none; border-color: var(--color-border-secondary); }
-  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; padding-top: 1.25rem; border-top: var(--form-border); }
-  .btn { padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); font-family: inherit; }
-  .btn:hover { background: var(--color-background-secondary); }
-  .btn-primary { background: var(--color-text-primary); color: var(--color-background-primary); border-color: var(--color-text-primary); }
-  .btn-primary:hover { opacity: 0.88; background: var(--color-text-primary); }
-  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #5c5c5c;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: #0a0a0a;
+    margin: 0 0 36px;
+    line-height: 1.2;
+  }
+  .q-block { margin-bottom: 28px; }
+  .q-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0a0a0a;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .q-hint {
+    font-size: 13px;
+    color: #5c5c5c;
+    margin-bottom: 8px;
+    display: block;
+  }
+  textarea {
+    width: 100%;
+    min-height: 88px;
+    resize: vertical;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 10px 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    background: #ffffff;
+    color: #0a0a0a;
+    font-family: inherit;
+  }
+  textarea::placeholder {
+    color: #c0c0c0;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: #888888;
+  }
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #d9d9d9;
+  }
+  .btn {
+    min-height: 42px;
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    box-sizing: border-box;
+  }
+  .nav-row .btn {
+    background: transparent;
+    border: 1px solid #0a0a0a;
+    color: #0a0a0a;
+  }
+  .nav-row .btn:hover:not(:disabled) {
+    background: rgba(10, 10, 10, 0.06);
+  }
+  .nav-row .btn-primary {
+    background: #0a0a0a;
+    color: #ffffff;
+    border: 1px solid #0a0a0a;
+  }
+  .nav-row .btn-primary:hover:not(:disabled) {
+    opacity: 0.92;
+    background: #0a0a0a;
+  }
+  .btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .save-status {
+    font-size: 12px;
+    color: #9a9a9a;
+    text-align: center;
+    margin-top: 10px;
+  }
   .review-section { margin-bottom: 1.5rem; }
-  .review-section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-secondary); margin-bottom: 0.75rem; padding-bottom: 6px; border-bottom: var(--form-border); }
+  .review-section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #5c5c5c;
+    margin-bottom: 0.75rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #d9d9d9;
+  }
   .review-q { margin-bottom: 1rem; }
-  .review-q-label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 2px; }
-  .review-q-answer { font-size: 14px; color: var(--color-text-primary); white-space: pre-wrap; }
-  .review-q-empty { font-size: 13px; color: var(--color-text-secondary); font-style: italic; }
+  .review-q-label { font-size: 13px; font-weight: 500; color: #5c5c5c; margin-bottom: 2px; }
+  .review-q-answer { font-size: 14px; color: #0a0a0a; white-space: pre-wrap; }
+  .review-q-empty { font-size: 13px; color: #5c5c5c; font-style: italic; }
   .done-block { text-align: center; padding: 2rem 0; }
-  .done-block p { color: var(--color-text-secondary); font-size: 14px; margin-top: 0.5rem; }
+  .done-block p { color: #5c5c5c; font-size: 14px; margin-top: 0.5rem; }
   .copy-btn { margin-top: 1rem; }
   .step-dots { display: flex; gap: 6px; align-items: center; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-border-secondary); }
-  .dot.done { background: var(--color-text-primary); }
-  .dot.current { width: 8px; height: 8px; background: var(--color-text-primary); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #e0e0e0; }
+  .dot.done { background: #0a0a0a; }
+  .dot.current { width: 8px; height: 8px; background: #0a0a0a; }
 </style>
+</head>
+<body>
+<div class="main-container">
+  <header class="site-header" role="banner">
+    <span class="wordmark">Coda Homes</span>
+    <span class="header-rule" aria-hidden="true"></span>
+    <span class="header-subtitle">Brand &amp; Positioning Intake</span>
+  </header>
 
-<div class="form-wrap" role="main">
-  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Coda Homes brand and positioning intake form</h2>
+  <div class="form-wrap" role="main">
+    <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Coda Homes brand and positioning intake form</h2>
 
-  <div class="progress-bar-wrap">
-    <div class="progress-label">
-      <span id="section-name">Identity & Positioning</span>
-      <span id="section-count">1 of 8</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-label">
+        <span id="section-name">Identity & Positioning</span>
+        <span id="section-count">1 of 8</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:12.5%"></div></div>
+      <div class="step-dots" id="step-dots" style="margin-top:8px;"></div>
     </div>
-    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:12.5%"></div></div>
-    <div class="step-dots" id="step-dots" style="margin-top:8px;"></div>
-  </div>
 
-  <div id="sections-wrap"></div>
+    <p class="autosave-note">Answers save automatically — you can close and return any time.</p>
+
+    <div id="sections-wrap"></div>
+  </div>
 </div>
 
 <script>
@@ -159,7 +330,7 @@ function saveCurrent() {
 }
 
 function buildReview() {
-  let html = '<div class="review-section-title" style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:1rem;text-transform:none;letter-spacing:0;">Review your answers before copying</div>';
+  let html = '<div class="review-section-title" style="font-size:14px;font-weight:500;color:#0a0a0a;margin-bottom:1rem;text-transform:none;letter-spacing:0;">Review your answers before copying</div>';
   sections.forEach(sec => {
     html += `<div class="review-section"><div class="review-section-title">${sec.tag}</div>`;
     sec.questions.forEach(q => {
@@ -248,3 +419,5 @@ function render() {
 
 render();
 </script>
+</body>
+</html>
